@@ -19,3 +19,14 @@ export type AgencyStat = {
   label: string;
   value: string;
 };
+
+export type ServiceItem = {
+  description: string;
+  visual: "ai" | "apps" | "brand" | "marketing" | "web";
+  title: string;
+};
+
+export type ProcessStep = {
+  description: string;
+  title: string;
+};

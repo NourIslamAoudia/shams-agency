@@ -1,4 +1,11 @@
-import type { AgencyStat, NavItem, PartnerLogoItem, SocialItem } from "@/types/site";
+import type {
+  AgencyStat,
+  NavItem,
+  PartnerLogoItem,
+  ProcessStep,
+  ServiceItem,
+  SocialItem,
+} from "@/types/site";
 
 export const brandAssets = {
   hero: "/images/herosectionimage-v2.png",
@@ -44,4 +51,50 @@ export const agencyStats: AgencyStat[] = [
   { value: "11-50", label: "Parent company team" },
   { value: "PV + AI", label: "Energy and digital systems" },
   { value: "DZ + Africa", label: "Market focus" },
+];
+
+export const servicesPageItems: ServiceItem[] = [
+  {
+    title: "Web Development",
+    description: "Fast, modern websites that turn Shams ideas into clear digital experiences.",
+    visual: "web",
+  },
+  {
+    title: "Branding & Strategy",
+    description: "Visual systems, campaigns and positioning built around the Shams ecosystem.",
+    visual: "brand",
+  },
+  {
+    title: "Digital Marketing",
+    description: "Launch-ready content, landing pages and campaigns for measurable growth.",
+    visual: "marketing",
+  },
+  {
+    title: "AI & Automation",
+    description: "Smart workflows, dashboards and internal tools that save teams time.",
+    visual: "ai",
+  },
+  {
+    title: "Mobile & Web Apps",
+    description: "Useful applications for customers, staff and clean-energy operations.",
+    visual: "apps",
+  },
+];
+
+export const workflowSteps: ProcessStep[] = [
+  {
+    title: "Discovery & Brief",
+    description:
+      "We collect the goal, audience, offer and operational context, then turn it into a clear digital plan for Shams teams.",
+  },
+  {
+    title: "Prototype & Design",
+    description:
+      "We shape the core journey, visual direction and interactive prototype before production starts, so every screen has a reason.",
+  },
+  {
+    title: "Build, Launch & Iterate",
+    description:
+      "We develop the experience, connect the tools, test the details and keep improving after launch with real feedback.",
+  },
 ];
