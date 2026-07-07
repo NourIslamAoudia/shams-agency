@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 
 import { BrandLogo } from "@/components/brand-logo";
 import { Container } from "@/components/ui/container";
@@ -43,12 +46,37 @@ const teamMembers = [
   },
 ] as const;
 
+const sectionVariants: Variants = {
+  hidden: { opacity: 0, y: 42 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], staggerChildren: 0.1 },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 26 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+};
+
 export function TeamCredits() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section className="pb-16 pt-6 sm:pb-24 lg:pb-28">
       <Container>
-        <div className="border-t border-navy/10 pt-8 lg:pt-12">
-          <div className="grid gap-6 lg:grid-cols-[0.9fr_0.5fr] lg:items-end">
+        <motion.div
+          initial={reduceMotion ? false : "hidden"}
+          whileInView={reduceMotion ? undefined : "visible"}
+          viewport={{ once: false, amount: 0.18 }}
+          variants={sectionVariants}
+          className="border-t border-navy/10 pt-8 lg:pt-12"
+        >
+          <motion.div
+            variants={itemVariants}
+            className="grid gap-6 lg:grid-cols-[0.9fr_0.5fr] lg:items-end"
+          >
             <div>
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-navy/10 bg-white/65 px-3 py-1 text-xs font-semibold text-navy/70 shadow-sm">
                 <BrandLogo decorative variant="mark" className="size-5 shrink-0" />
@@ -66,13 +94,14 @@ export function TeamCredits() {
               <span className="font-black text-lime">product</span> and{" "}
               <span className="font-black text-lime">backend</span> systems.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="mt-10 space-y-4 lg:mt-14">
+          <motion.div variants={sectionVariants} className="mt-10 space-y-4 lg:mt-14">
             {teamMembers.map((member, index) => (
-              <article
+              <motion.article
                 key={member.name}
                 tabIndex={0}
+                variants={itemVariants}
                 className="group overflow-hidden rounded-[1.35rem] border border-navy/10 bg-white/55 p-5 shadow-[0_18px_60px_rgba(25,46,69,0.07)] outline-none backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:bg-lime hover:shadow-[0_28px_90px_rgba(25,46,69,0.16)] focus:bg-lime focus:shadow-[0_28px_90px_rgba(25,46,69,0.16)] sm:p-6 lg:p-7"
               >
                 <div className="grid gap-5 lg:grid-cols-[0.08fr_0.62fr_0.22fr_0.08fr] lg:items-center">
@@ -172,10 +201,10 @@ export function TeamCredits() {
                     <p className="mt-2 text-2xl font-black text-navy">{member.role}</p>
                   </div>
                 </div>
-              </article>
+              </motion.article>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </Container>
     </section>
   );

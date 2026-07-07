@@ -1,13 +1,87 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
 
 import { BrandLogo } from "@/components/brand-logo";
 import { Container } from "@/components/ui/container";
 import { agencyStats } from "@/lib/site-content";
 
+const aboutHeadline = [
+  { text: "We're" },
+  { text: "the" },
+  { text: "digital" },
+  { text: "department" },
+  { text: "inside" },
+  { text: "Shams", highlight: true },
+  { text: "Djazair,", highlight: true },
+  { text: "building" },
+  { text: "the" },
+  { text: "online" },
+  { text: "systems" },
+  { text: "that" },
+  { text: "help" },
+  { text: "clean-energy" },
+  { text: "ideas" },
+  { text: "move" },
+  { text: "faster." },
+] as const;
+
+const aboutParagraph = [
+  { text: "As" },
+  { text: "part" },
+  { text: "of" },
+  { text: "one" },
+  { text: "of" },
+  { text: "Algeria's" },
+  { text: "solar-energy" },
+  { text: "players," },
+  { text: "Shams" },
+  { text: "Agency" },
+  { text: "brings" },
+  { text: "a" },
+  { text: "builder's" },
+  { text: "mindset" },
+  { text: "to" },
+  { text: "branding," },
+  { text: "websites," },
+  { text: "apps," },
+  { text: "dashboards" },
+  { text: "and" },
+  { text: "AI" },
+  { text: "tools." },
+  { text: "We" },
+  { text: "connect" },
+  { text: "the" },
+  { text: "parent" },
+  { text: "company's" },
+  { text: "renewable-energy" },
+  { text: "mission" },
+  { text: "with" },
+  { text: "digital" },
+  { text: "products" },
+  { text: "that" },
+  { text: "look", strong: true },
+  { text: "sharp,", strong: true },
+  { text: "work", strong: true },
+  { text: "clearly,", strong: true },
+  { text: "and", strong: true },
+  { text: "scale.", strong: true },
+] as const;
+
 export function AboutAgency() {
   const reduceMotion = useReducedMotion();
+  const revealRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: revealRef,
+    offset: ["start 84%", "end 24%"],
+  });
   const viewport = { once: false, margin: "-15% 0px", amount: 0.2 };
 
   return (
@@ -16,6 +90,7 @@ export function AboutAgency() {
 
       <Container>
         <motion.div
+          ref={revealRef}
           initial={reduceMotion ? false : { opacity: 0, y: 28 }}
           whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={viewport}
@@ -29,25 +104,14 @@ export function AboutAgency() {
                 About us
               </div>
 
-              <h2 className="max-w-5xl text-[clamp(2rem,3.65vw,4rem)] font-black leading-[1.04] tracking-normal text-navy">
-                We&apos;re the digital department inside{" "}
-                <span className="text-purple">Shams Djazair</span>, building the online systems that
-                help clean-energy ideas move faster.
-              </h2>
+              <ScrollScrubTextReveal progress={scrollYProgress} reduceMotion={reduceMotion} />
             </div>
 
-            <p className="text-right text-[clamp(3rem,7vw,7rem)] font-black leading-none text-navy/[0.08] max-lg:hidden">
-              about
-            </p>
+            <ScrollScrubAboutWord progress={scrollYProgress} reduceMotion={reduceMotion} />
           </div>
 
           <div className="mt-6 grid gap-8 lg:grid-cols-[1.45fr_0.55fr] lg:items-end">
-            <p className="max-w-5xl text-[clamp(1.2rem,2vw,2rem)] font-semibold leading-[1.35] text-navy/60">
-              As part of one of Algeria&apos;s solar-energy players, Shams Agency brings a
-              builder&apos;s mindset to branding, websites, apps, dashboards and AI tools. We
-              connect the parent company&apos;s renewable-energy mission with digital products that{" "}
-              <strong className="font-black text-navy">look sharp, work clearly, and scale.</strong>
-            </p>
+            <ScrollScrubParagraphReveal progress={scrollYProgress} reduceMotion={reduceMotion} />
 
             <div className="rounded-[1.5rem] bg-navy p-5 text-off-white shadow-[0_20px_60px_rgba(25,46,69,0.14)]">
               <p className="text-sm font-semibold uppercase tracking-[0.16em] text-lime">
@@ -78,5 +142,187 @@ export function AboutAgency() {
         </motion.div>
       </Container>
     </section>
+  );
+}
+
+function ScrollScrubTextReveal({
+  progress,
+  reduceMotion,
+}: {
+  progress: MotionValue<number>;
+  reduceMotion: boolean | null;
+}) {
+  const label =
+    "We're the digital department inside Shams Djazair, building the online systems that help clean-energy ideas move faster.";
+
+  if (reduceMotion) {
+    return (
+      <h2 className="max-w-5xl text-[clamp(2rem,3.65vw,4rem)] font-black leading-[1.04] tracking-normal text-navy">
+        We&apos;re the digital department inside{" "}
+        <span className="text-purple">Shams Djazair</span>, building the online systems that help
+        clean-energy ideas move faster.
+      </h2>
+    );
+  }
+
+  return (
+    <h2
+      aria-label={label}
+      className="max-w-5xl text-[clamp(2rem,3.65vw,4rem)] font-black leading-[1.04] tracking-normal"
+    >
+      {aboutHeadline.map((word, index) => (
+        <RevealWord
+          key={`${word.text}-${index}`}
+          highlight={"highlight" in word}
+          index={index}
+          progress={progress}
+          revealSize={0.14}
+          segmentStart={0}
+          segmentSpan={0.46}
+          total={aboutHeadline.length}
+          word={word.text}
+        />
+      ))}
+    </h2>
+  );
+}
+
+function RevealWord({
+  highlight,
+  index,
+  progress,
+  revealSize = 0.16,
+  segmentSpan = 0.78,
+  segmentStart = 0,
+  total,
+  word,
+}: {
+  highlight: boolean;
+  index: number;
+  progress: MotionValue<number>;
+  revealSize?: number;
+  segmentSpan?: number;
+  segmentStart?: number;
+  total: number;
+  word: string;
+}) {
+  const start = Math.min(segmentStart + (index / total) * segmentSpan, 0.94);
+  const end = Math.min(start + revealSize, 1);
+  const opacity = useTransform(progress, [start, end], [0.22, 1]);
+  const color = useTransform(
+    progress,
+    [start, end],
+    highlight ? ["rgba(66, 34, 229, 0.22)", "#4222e5"] : ["rgba(25, 46, 69, 0.22)", "#192e45"],
+  );
+
+  return (
+    <>
+      <motion.span aria-hidden="true" className="inline-block" style={{ color, opacity }}>
+        {word}
+      </motion.span>{" "}
+    </>
+  );
+}
+
+function ScrollScrubAboutWord({
+  progress,
+  reduceMotion,
+}: {
+  progress: MotionValue<number>;
+  reduceMotion: boolean | null;
+}) {
+  const opacity = useTransform(progress, [0.24, 0.58], [0.025, 0.1]);
+
+  if (reduceMotion) {
+    return (
+      <p className="text-right text-[clamp(3rem,7vw,7rem)] font-black leading-none text-navy/[0.08] max-lg:hidden">
+        about
+      </p>
+    );
+  }
+
+  return (
+    <motion.p
+      aria-hidden="true"
+      className="text-right text-[clamp(3rem,7vw,7rem)] font-black leading-none text-navy max-lg:hidden"
+      style={{ opacity }}
+    >
+      about
+    </motion.p>
+  );
+}
+
+function ScrollScrubParagraphReveal({
+  progress,
+  reduceMotion,
+}: {
+  progress: MotionValue<number>;
+  reduceMotion: boolean | null;
+}) {
+  const label =
+    "As part of one of Algeria's solar-energy players, Shams Agency brings a builder's mindset to branding, websites, apps, dashboards and AI tools. We connect the parent company's renewable-energy mission with digital products that look sharp, work clearly, and scale.";
+
+  if (reduceMotion) {
+    return (
+      <p className="max-w-5xl text-[clamp(1.2rem,2vw,2rem)] font-semibold leading-[1.35] text-navy/60">
+        As part of one of Algeria&apos;s solar-energy players, Shams Agency brings a
+        builder&apos;s mindset to branding, websites, apps, dashboards and AI tools. We connect the
+        parent company&apos;s renewable-energy mission with digital products that{" "}
+        <strong className="font-black text-navy">look sharp, work clearly, and scale.</strong>
+      </p>
+    );
+  }
+
+  return (
+    <p
+      aria-label={label}
+      className="max-w-5xl text-[clamp(1.2rem,2vw,2rem)] font-semibold leading-[1.35]"
+    >
+      {aboutParagraph.map((word, index) => (
+        <RevealParagraphWord
+          key={`${word.text}-${index}`}
+          index={index}
+          progress={progress}
+          strong={"strong" in word}
+          total={aboutParagraph.length}
+          word={word.text}
+        />
+      ))}
+    </p>
+  );
+}
+
+function RevealParagraphWord({
+  index,
+  progress,
+  strong,
+  total,
+  word,
+}: {
+  index: number;
+  progress: MotionValue<number>;
+  strong: boolean;
+  total: number;
+  word: string;
+}) {
+  const start = Math.min(0.42 + (index / total) * 0.48, 0.94);
+  const end = Math.min(start + 0.1, 1);
+  const opacity = useTransform(progress, [start, end], [0.24, 1]);
+  const color = useTransform(
+    progress,
+    [start, end],
+    strong ? ["rgba(25, 46, 69, 0.24)", "#192e45"] : ["rgba(25, 46, 69, 0.24)", "rgba(25, 46, 69, 0.62)"],
+  );
+
+  return (
+    <>
+      <motion.span
+        aria-hidden="true"
+        className={strong ? "inline-block font-black" : "inline-block"}
+        style={{ color, opacity }}
+      >
+        {word}
+      </motion.span>{" "}
+    </>
   );
 }
