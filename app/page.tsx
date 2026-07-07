@@ -1,7 +1,6 @@
 import { SiteHeader } from "@/components/site-header";
 import { AboutAgency } from "@/sections/about-agency";
 import { HomeHero } from "@/sections/home-hero";
-import { ProcessWorkflow } from "@/sections/process-workflow";
 import { ServicesOverview } from "@/sections/services-overview";
 
 export default function Home() {
@@ -11,7 +10,6 @@ export default function Home() {
       <HomeHero />
       <AboutAgency />
       <ServicesOverview />
-      <ProcessWorkflow />
     </div>
   );
 }

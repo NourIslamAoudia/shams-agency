@@ -22,7 +22,8 @@ export type AgencyStat = {
 
 export type ServiceItem = {
   description: string;
-  visual: "ai" | "apps" | "brand" | "marketing" | "web";
+  image: string;
+  tags: string[];
   title: string;
 };
 

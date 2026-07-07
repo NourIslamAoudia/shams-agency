@@ -56,28 +56,38 @@ export const agencyStats: AgencyStat[] = [
 export const servicesPageItems: ServiceItem[] = [
   {
     title: "Web Development",
-    description: "Fast, modern websites that turn Shams ideas into clear digital experiences.",
-    visual: "web",
+    description:
+      "We build fast, modern websites for brands that need a sharp digital presence, clear messaging and smooth performance.",
+    image: "/images/services/webdev.png",
+    tags: ["Websites", "Performance", "SEO", "Launch"],
   },
   {
-    title: "Branding & Strategy",
-    description: "Visual systems, campaigns and positioning built around the Shams ecosystem.",
-    visual: "brand",
+    title: "Mobile Development",
+    description:
+      "We design and develop useful mobile experiences for customers, teams and clean-energy operations across the Shams ecosystem.",
+    image: "/images/services/mobildev.png",
+    tags: ["Mobile Apps", "UX/UI", "Dashboards", "Operations"],
   },
   {
-    title: "Digital Marketing",
-    description: "Launch-ready content, landing pages and campaigns for measurable growth.",
-    visual: "marketing",
+    title: "Desktop Systems",
+    description:
+      "We create reliable desktop tools and internal systems for workflows that need speed, stability and long-term support.",
+    image: "/images/services/discktoop.png",
+    tags: ["Desktop Setup", "Workstations", "IT Support", "Security"],
   },
   {
-    title: "AI & Automation",
-    description: "Smart workflows, dashboards and internal tools that save teams time.",
-    visual: "ai",
+    title: "Deployment",
+    description:
+      "We prepare, publish and connect digital products with clean release flows, secure hosting and production-ready checks.",
+    image: "/images/services/deploy.png",
+    tags: ["Hosting", "CI/CD", "Monitoring", "Security"],
   },
   {
-    title: "Mobile & Web Apps",
-    description: "Useful applications for customers, staff and clean-energy operations.",
-    visual: "apps",
+    title: "Maintenance",
+    description:
+      "We keep your platforms healthy after launch with updates, fixes, backups, monitoring and steady product improvements.",
+    image: "/images/services/mantu.png",
+    tags: ["Updates", "Backups", "Support", "Optimization"],
   },
 ];
 
