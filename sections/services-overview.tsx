@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
-import { motion, useReducedMotion, type MotionStyle, type Variants } from "framer-motion";
+import { useEffect, useRef, type CSSProperties } from "react";
+import { useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight } from "lucide-react";
@@ -11,87 +11,50 @@ import { ArrowUpRight } from "lucide-react";
 import { BrandLogo } from "@/components/brand-logo";
 import { Container } from "@/components/ui/container";
 import { servicesPageItems } from "@/lib/site-content";
+import { cn } from "@/lib/utils";
 import type { ServiceItem } from "@/types/site";
 
-const ease = [0.22, 1, 0.36, 1] as const;
-
-const sectionVariants: Variants = {
-  hidden: { opacity: 0, x: -24 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.7, ease, staggerChildren: 0.1 },
-  },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, x: -24 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease } },
-};
-
-const cardVariants: Variants = {
-  hidden: { opacity: 0, x: -56 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.75, ease } },
-};
-
-type CardMotionStyle = {
-  opacity?: MotionStyle["opacity"];
-  transform?: MotionStyle["transform"];
-  willChange?: MotionStyle["willChange"];
-  zIndex?: number;
-};
-
 export function ServicesOverview() {
-  const reduceMotion = useReducedMotion();
-
   return (
     <section className="pb-14 pt-6 sm:pb-20 lg:pb-24">
       <Container>
-        <motion.div
-          initial={reduceMotion ? false : "hidden"}
-          whileInView={reduceMotion ? undefined : "visible"}
-          viewport={{ once: false, amount: 0.18 }}
-          variants={sectionVariants}
-        >
-          <motion.div
-            variants={itemVariants}
-            className="grid gap-6 border-t border-navy/10 pt-8 lg:grid-cols-[0.72fr_0.58fr] lg:items-end lg:pt-10"
-          >
-            <div>
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-navy/10 bg-white/60 px-3 py-1 text-xs font-semibold text-navy/70 shadow-sm">
-                <BrandLogo decorative variant="mark" className="size-5 shrink-0" />
-                Our Services
-              </div>
-              <h1 className="max-w-4xl text-[clamp(3.4rem,8vw,8.75rem)] font-black leading-[0.82] tracking-normal text-navy">
-                Our Services
-              </h1>
+        <div className="grid gap-6 border-t border-navy/10 pt-8 lg:grid-cols-[0.72fr_0.58fr] lg:items-end lg:pt-10">
+          <div>
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-navy/10 bg-white/60 px-3 py-1 text-xs font-semibold text-navy/70 shadow-sm">
+              <BrandLogo decorative variant="mark" className="size-5 shrink-0" />
+              Our Services
             </div>
+            <h1 className="max-w-4xl text-[clamp(3.4rem,8vw,8.75rem)] font-black leading-[0.82] tracking-normal text-navy">
+              Our Services
+            </h1>
+          </div>
 
-            <p className="max-w-xl text-base font-semibold leading-7 text-navy/62 sm:text-lg">
-              Digital systems, deployment and support services built for Shams Djazair and teams
-              that need reliable technology with a clean visual edge.
-            </p>
-          </motion.div>
-
-          <ServicesSmoothShowcase reduceMotion={reduceMotion} />
-        </motion.div>
+          <p className="max-w-xl text-base font-semibold leading-7 text-navy/62 sm:text-lg">
+            Digital systems, deployment and support services built for Shams Djazair and teams that
+            need reliable technology with a clean visual edge.
+          </p>
+        </div>
       </Container>
+
+      <ServicesShowcase />
     </section>
   );
 }
 
-function ServicesSmoothShowcase({ reduceMotion }: { reduceMotion: boolean | null }) {
+function ServicesShowcase() {
+  const reduceMotion = useReducedMotion();
   const showcaseRef = useRef<HTMLDivElement>(null);
-  const cardCount = servicesPageItems.length;
+  const deckRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (reduceMotion || cardCount < 2) {
+    if (reduceMotion) {
       return;
     }
 
-    const root = showcaseRef.current;
+    const showcase = showcaseRef.current;
+    const deck = deckRef.current;
 
-    if (!root) {
+    if (!showcase || !deck) {
       return;
     }
 
@@ -102,150 +65,198 @@ function ServicesSmoothShowcase({ reduceMotion }: { reduceMotion: boolean | null
       media = gsap.matchMedia();
 
       media.add("(min-width: 1024px)", () => {
-        const cards = Array.from(root.querySelectorAll<HTMLElement>("[data-service-card]"));
+        const cards = Array.from(deck.querySelectorAll<HTMLElement>("[data-pinned-service-card]"));
+        const peek = 64;
 
-        if (cards.length < 2) {
+        if (cards.length === 0) {
           return;
         }
 
+        const getLeftExitX = () => {
+          const cardWidth = cards[0]?.offsetWidth ?? 0;
+          return -(cardWidth + window.innerWidth * 0.08);
+        };
+
         gsap.set(cards, {
-          autoAlpha: 0,
-          force3D: true,
-          xPercent: -110,
-        });
-        gsap.set(cards[0], {
           autoAlpha: 1,
-          xPercent: 0,
-        });
-        cards.forEach((card, index) => {
-          gsap.set(card, { zIndex: index + 1 });
+          force3D: true,
+          x: (index) => index * peek,
+          zIndex: (index) => cards.length - index,
         });
 
         const timeline = gsap.timeline({
           defaults: { ease: "none" },
           scrollTrigger: {
             anticipatePin: 1,
-            end: () => `+=${(cards.length - 1) * window.innerHeight}`,
+            end: () => `+=${cards.length * window.innerHeight}`,
             invalidateOnRefresh: true,
             pin: true,
-            scrub: 1.1,
-            start: "top 25%",
-            trigger: root,
+            scrub: 1,
+            start: "top top",
+            trigger: showcase,
           },
         });
 
-        for (let index = 0; index < cards.length - 1; index += 1) {
+        cards.forEach((card, index) => {
           timeline.to(
-            cards[index],
+            card,
             {
               autoAlpha: 0,
               duration: 1,
-              xPercent: 110,
+              x: () => getLeftExitX(),
             },
             index,
           );
-          timeline.fromTo(
-            cards[index + 1],
-            {
-              autoAlpha: 0,
-              xPercent: -110,
-            },
-            {
-              autoAlpha: 1,
-              duration: 1,
-              xPercent: 0,
-            },
-            index,
-          );
-        }
+
+          if (cards[index + 1]) {
+            timeline.to(
+              cards.slice(index + 1),
+              {
+                duration: 1,
+                x: (cardIndex) => cardIndex * peek,
+              },
+              index,
+            );
+          }
+        });
 
         ScrollTrigger.refresh();
+
+        return () => {
+          timeline.scrollTrigger?.kill();
+          timeline.kill();
+          gsap.set(cards, { clearProps: "opacity,visibility,transform,zIndex" });
+        };
       });
-    }, root);
+    }, showcase);
 
     return () => {
       media?.revert();
       ctx.revert();
     };
-  }, [cardCount, reduceMotion]);
+  }, [reduceMotion]);
 
-  if (reduceMotion || cardCount < 2) {
+  if (reduceMotion) {
     return (
-      <div className="mx-auto mt-8 max-w-[1584px] space-y-7 lg:mt-12 lg:space-y-10">
-        {servicesPageItems.map((service, index) => (
-          <SmoothServiceCard
-            key={service.title}
-            index={index}
-            mode="static"
-            reduceMotion={reduceMotion}
-            service={service}
-          />
-        ))}
-      </div>
+      <Container>
+        <StaticServicesShowcase />
+      </Container>
     );
   }
 
   return (
-    <div className="mx-auto mt-8 max-w-[1584px] lg:mt-12">
-      <div className="space-y-7 lg:hidden">
-        {servicesPageItems.map((service, index) => (
-          <SmoothServiceCard
-            key={service.title}
-            index={index}
-            mode="static"
-            reduceMotion={reduceMotion}
-            service={service}
-          />
-        ))}
+    <>
+      <div className="lg:hidden">
+        <Container>
+          <StaticServicesShowcase />
+        </Container>
       </div>
 
-      <div ref={showcaseRef} className="hidden lg:block">
-        <div className="relative aspect-[1584/672] overflow-hidden">
+      <div
+        ref={showcaseRef}
+        className="relative mt-8 hidden h-screen w-screen items-center overflow-hidden lg:flex lg:mt-12"
+        style={
+          {
+            "--service-card-height": "calc(var(--service-card-width) * 672 / 1584)",
+            "--service-card-top": "calc((100vh - var(--service-card-height)) / 2)",
+            "--service-card-width": "min(72vw, 1280px)",
+          } as CSSProperties
+        }
+      >
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <div className="absolute left-[4vw] top-[7vh] text-[13vw] font-black leading-none tracking-normal text-navy/[0.035]">
+            SERVICES
+          </div>
+          <div className="absolute left-[4vw] right-[4vw] top-[16vh] h-px bg-navy/10" />
+          <div className="absolute bottom-[12vh] left-[4vw] right-[4vw] h-px bg-navy/10" />
+          <div className="absolute right-[7vw] top-[18vh] h-24 w-24 rounded-full border border-navy/10" />
+          <div className="absolute bottom-[15vh] right-[12vw] h-3 w-3 rounded-full bg-lime shadow-[0_0_32px_rgba(224,255,4,0.75)]" />
+        </div>
+
+        <div className="pointer-events-none absolute left-[4vw] top-[8vh] z-30 flex items-center gap-3">
+          <div className="inline-flex items-center gap-2 rounded-full border border-navy/10 bg-white/70 px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-navy/70 shadow-sm backdrop-blur">
+            <BrandLogo decorative variant="mark" className="size-5 shrink-0" />
+            Service Stack
+          </div>
+          <span className="font-mono text-xs font-black tracking-[0.18em] text-navy/45">
+            Scroll to explore
+          </span>
+        </div>
+
+        <div className="pointer-events-none absolute right-[4vw] top-[8vh] z-30 text-right">
+          <p className="font-mono text-xs font-black tracking-[0.18em] text-navy/45">
+            {String(servicesPageItems.length).padStart(2, "0")} SERVICES
+          </p>
+          <p className="mt-1 max-w-56 text-sm font-semibold leading-5 text-navy/60">
+            Digital work, launch support and long-term care in one flow.
+          </p>
+        </div>
+
+        <div ref={deckRef} className="relative h-full w-full">
           {servicesPageItems.map((service, index) => (
-            <SmoothServiceCard
+            <ServiceCard
               key={service.title}
+              className="absolute left-[4vw] top-[var(--service-card-top)]"
+              dataPinnedCard
               index={index}
-              mode="stacked"
-              motionStyle={{
-                opacity: index === 0 ? 1 : 0,
-                transform: index === 0 ? "translate3d(0%, 0, 0)" : "translate3d(-110%, 0, 0)",
-                willChange: "transform, opacity",
-                zIndex: index + 1,
-              }}
-              reduceMotion={false}
+              pinned
               service={service}
             />
           ))}
         </div>
+
+        <div className="pointer-events-none absolute bottom-[7vh] left-[4vw] z-30 flex gap-3">
+          {["Strategy", "Build", "Deploy", "Support"].map((item) => (
+            <span
+              key={item}
+              className="rounded-full border border-navy/10 bg-white/55 px-4 py-2 text-xs font-black text-navy/65 shadow-sm backdrop-blur"
+            >
+              {item}
+            </span>
+          ))}
+        </div>
+
+        <div className="pointer-events-none absolute bottom-[7vh] right-[4vw] z-30 font-mono text-xs font-black tracking-[0.18em] text-navy/45">
+          Cards exit left / reverse on scroll up
+        </div>
       </div>
+    </>
+  );
+}
+
+function StaticServicesShowcase() {
+  return (
+    <div className="mx-auto mt-8 max-w-[1584px] space-y-7 lg:mt-12 lg:space-y-10">
+      {servicesPageItems.map((service, index) => (
+        <ServiceCard key={service.title} index={index} service={service} />
+      ))}
     </div>
   );
 }
 
-function SmoothServiceCard({
+function ServiceCard({
+  className,
+  dataPinnedCard = false,
   index,
-  mode = "static",
-  motionStyle,
-  reduceMotion,
+  pinned = false,
   service,
 }: {
+  className?: string;
+  dataPinnedCard?: boolean;
   index: number;
-  mode?: "stacked" | "static";
-  motionStyle?: CardMotionStyle;
-  reduceMotion: boolean | null;
+  pinned?: boolean;
   service: ServiceItem;
 }) {
   return (
-    <motion.article
-      data-service-card={mode === "stacked" ? "true" : undefined}
-      initial={mode === "static" && !reduceMotion ? "hidden" : false}
-      style={motionStyle}
-      variants={mode === "static" ? cardVariants : undefined}
-      viewport={{ once: false, amount: 0.22 }}
-      whileInView={mode === "static" && !reduceMotion ? "visible" : undefined}
-      className={`group relative aspect-[1584/672] overflow-hidden rounded-[1.25rem] border border-navy/10 bg-navy text-off-white shadow-[0_26px_80px_rgba(25,46,69,0.16)] sm:rounded-[1.75rem] lg:rounded-[2rem]${
-        mode === "stacked" ? " absolute inset-0 w-full" : ""
-      }`}
+    <article
+      data-pinned-service-card={dataPinnedCard ? "true" : undefined}
+      className={cn(
+        "group relative overflow-hidden bg-navy text-off-white shadow-[0_26px_80px_rgba(25,46,69,0.16)]",
+        pinned
+          ? "h-[var(--service-card-height)] w-[var(--service-card-width)] shrink-0 rounded-[1.75rem] border border-navy/10"
+          : "aspect-[1584/672] rounded-[1.25rem] border border-navy/10 sm:rounded-[1.75rem] lg:rounded-[2rem]",
+        className,
+      )}
     >
       <div aria-hidden="true" className="absolute inset-0">
         <Image
@@ -305,6 +316,6 @@ function SmoothServiceCard({
           ))}
         </div>
       </div>
-    </motion.article>
+    </article>
   );
 }

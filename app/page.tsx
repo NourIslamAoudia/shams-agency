@@ -2,6 +2,8 @@ import { SiteHeader } from "@/components/site-header";
 import { AboutAgency } from "@/sections/about-agency";
 import { HomeHero } from "@/sections/home-hero";
 import { ServicesOverview } from "@/sections/services-overview";
+import { StrategySection } from "@/sections/strategy-section";
+import { TeamCredits } from "@/sections/team-credits";
 
 export default function Home() {
   return (
@@ -10,6 +12,8 @@ export default function Home() {
       <HomeHero />
       <AboutAgency />
       <ServicesOverview />
+      <TeamCredits />
+      <StrategySection />
     </div>
   );
 }
