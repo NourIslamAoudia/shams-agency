@@ -36,12 +36,20 @@ export function HeroMediaCard() {
         className="absolute inset-0"
       >
         <Image
+          src={brandAssets.heroMobile}
+          alt="Digital product systems by Shams Agency"
+          fill
+          priority
+          sizes="calc(100vw - 40px)"
+          className="object-cover object-center sm:hidden"
+        />
+        <Image
           src={brandAssets.hero}
           alt="Digital product systems by Shams Agency"
           fill
           priority
           sizes="(min-width: 1500px) 1380px, calc(100vw - 40px)"
-          className="object-cover object-[72%_center] sm:object-[64%_center] xl:object-center"
+          className="hidden object-cover object-[64%_center] sm:block xl:object-center"
         />
       </motion.div>
       <HeroServiceList />

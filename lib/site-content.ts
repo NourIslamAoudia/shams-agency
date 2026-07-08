@@ -9,6 +9,7 @@ import type {
 
 export const brandAssets = {
   hero: "/images/cta/image%2014.png",
+  heroMobile: "/images/company/image%2014-mobile.png",
   logoWithText: "/images/logowithtext.png",
   simpleLogo: "/images/shams_agency_icon_cropped.png",
 } as const;

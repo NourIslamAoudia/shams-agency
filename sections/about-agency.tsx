@@ -77,24 +77,25 @@ const aboutParagraph = [
 
 export function AboutAgency() {
   const reduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
   const revealRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
-    target: revealRef,
-    offset: ["start 82%", "end 48%"],
+    target: sectionRef,
+    offset: ["start 84%", "end 36%"],
   });
   const viewport = { once: false, margin: "-15% 0px", amount: 0.2 };
 
   return (
-    <section id="about" className="relative scroll-mt-4 overflow-hidden py-12 sm:py-16 lg:py-20">
+    <section
+      ref={sectionRef}
+      id="about"
+      className="relative scroll-mt-4 overflow-hidden py-12 sm:py-16 lg:py-20"
+    >
       <div className="absolute left-1/2 top-0 -z-10 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-lime/20 blur-3xl" />
 
       <Container>
         <motion.div
           ref={revealRef}
-          initial={reduceMotion ? false : { opacity: 0, y: 28 }}
-          whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-          viewport={viewport}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="relative border-t border-navy/10 pt-8"
         >
           <div className="grid gap-8 lg:grid-cols-[1.45fr_0.55fr] lg:items-start">
@@ -176,9 +177,9 @@ function ScrollScrubTextReveal({
           highlight={"highlight" in word}
           index={index}
           progress={progress}
-          revealSize={0.08}
+          revealSize={0.1}
           segmentStart={0}
-          segmentSpan={0.28}
+          segmentSpan={0.38}
           total={aboutHeadline.length}
           word={word.text}
         />
@@ -208,11 +209,11 @@ function RevealWord({
 }) {
   const start = Math.min(segmentStart + (index / total) * segmentSpan, 0.94);
   const end = Math.min(start + revealSize, 1);
-  const opacity = useTransform(progress, [start, end], [0.22, 1]);
+  const opacity = useTransform(progress, [start, end], [0.34, 1]);
   const color = useTransform(
     progress,
     [start, end],
-    highlight ? ["rgba(66, 34, 229, 0.22)", "#4222e5"] : ["rgba(25, 46, 69, 0.22)", "#192e45"],
+    highlight ? ["rgba(66, 34, 229, 0.34)", "#4222e5"] : ["rgba(25, 46, 69, 0.34)", "#192e45"],
   );
 
   return (
@@ -305,13 +306,13 @@ function RevealParagraphWord({
   total: number;
   word: string;
 }) {
-  const start = Math.min(0.24 + (index / total) * 0.34, 0.9);
-  const end = Math.min(start + 0.07, 1);
-  const opacity = useTransform(progress, [start, end], [0.24, 1]);
+  const start = Math.min(0.34 + (index / total) * 0.34, 0.9);
+  const end = Math.min(start + 0.08, 1);
+  const opacity = useTransform(progress, [start, end], [0.3, 1]);
   const color = useTransform(
     progress,
     [start, end],
-    strong ? ["rgba(25, 46, 69, 0.24)", "#192e45"] : ["rgba(25, 46, 69, 0.24)", "rgba(25, 46, 69, 0.62)"],
+    strong ? ["rgba(25, 46, 69, 0.3)", "#192e45"] : ["rgba(25, 46, 69, 0.3)", "rgba(25, 46, 69, 0.62)"],
   );
 
   return (

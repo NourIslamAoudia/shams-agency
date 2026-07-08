@@ -167,7 +167,7 @@ function setupPinnedServiceCards(
     defaults: { ease: "none" },
     scrollTrigger: {
       anticipatePin: 1,
-      end: () => `+=${cards.length * window.innerHeight}`,
+      end: () => `+=${Math.max(cards.length - 1, 1) * window.innerHeight}`,
       invalidateOnRefresh: true,
       pin: true,
       scrub: 1,
@@ -176,7 +176,7 @@ function setupPinnedServiceCards(
     },
   });
 
-  cards.forEach((card, index) => {
+  cards.slice(0, -1).forEach((card, index) => {
     timeline.to(
       card,
       {
