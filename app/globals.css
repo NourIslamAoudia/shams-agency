@@ -20,4 +20,9 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geometric);
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
 }

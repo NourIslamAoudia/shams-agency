@@ -12,7 +12,7 @@ export function BuildTogetherCta() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="relative min-h-screen overflow-hidden text-off-white">
+    <section id="contact" className="relative min-h-[100svh] scroll-mt-4 overflow-hidden text-off-white">
       <motion.div
         initial={reduceMotion ? false : { scale: 1.08, opacity: 0.72 }}
         whileInView={reduceMotion ? undefined : { scale: 1, opacity: 1 }}
@@ -25,14 +25,14 @@ export function BuildTogetherCta() {
           alt=""
           fill
           sizes="100vw"
-          className="object-cover"
+          className="object-cover object-center"
           priority={false}
         />
       </motion.div>
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(25,46,69,0.92)_0%,rgba(25,46,69,0.72)_34%,rgba(25,46,69,0.28)_68%,rgba(25,46,69,0.08)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(25,46,69,0.96)_0%,rgba(25,46,69,0.86)_48%,rgba(25,46,69,0.46)_100%)] lg:bg-[linear-gradient(90deg,rgba(25,46,69,0.92)_0%,rgba(25,46,69,0.72)_34%,rgba(25,46,69,0.28)_68%,rgba(25,46,69,0.08)_100%)]" />
       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-navy/65 to-transparent" />
 
-      <Container className="relative flex min-h-screen items-center py-20">
+      <Container className="relative flex min-h-[100svh] items-center py-16 sm:py-20">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 42 }}
           whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
@@ -51,7 +51,7 @@ export function BuildTogetherCta() {
             Start the build
           </motion.div>
 
-          <h2 className="max-w-4xl text-[clamp(3.2rem,8vw,8rem)] font-black leading-[0.86] tracking-normal">
+          <h2 className="max-w-4xl text-[clamp(2.75rem,14vw,8rem)] font-black leading-[0.86] tracking-normal sm:text-[clamp(3.6rem,10vw,8rem)] lg:text-[clamp(3.2rem,8vw,8rem)]">
             Let&apos;s build something amazing together
           </h2>
 
@@ -62,7 +62,7 @@ export function BuildTogetherCta() {
 
           <div className="mt-9">
             <Link
-              href="/contact"
+              href="/#contact"
               className="inline-flex items-center gap-3 rounded-md bg-lime px-6 py-4 text-sm font-black text-navy transition-colors hover:bg-off-white"
             >
               Let&apos;s Talk

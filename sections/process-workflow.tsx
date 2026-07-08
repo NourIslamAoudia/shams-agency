@@ -130,7 +130,7 @@ function WorkflowStep({
           </h3>
 
           <motion.a
-            href="/contact"
+            href="/#contact"
             aria-label={`Start ${step.title}`}
             whileHover={reduceMotion ? undefined : { scale: 1.08, rotate: 8, x: 2, y: -2 }}
             whileTap={reduceMotion ? undefined : { scale: 0.96 }}

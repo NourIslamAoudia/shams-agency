@@ -16,7 +16,7 @@ import type { ServiceItem } from "@/types/site";
 
 export function ServicesOverview() {
   return (
-    <section className="pb-14 pt-6 sm:pb-20 lg:pb-24">
+    <section id="services" className="scroll-mt-4 pb-14 pt-6 sm:pb-20 lg:pb-24">
       <Container>
         <div className="grid gap-6 border-t border-navy/10 pt-8 lg:grid-cols-[0.72fr_0.58fr] lg:items-end lg:pt-10">
           <div>
@@ -24,7 +24,7 @@ export function ServicesOverview() {
               <BrandLogo decorative variant="mark" className="size-5 shrink-0" />
               Our Services
             </div>
-            <h1 className="max-w-4xl text-[clamp(3.4rem,8vw,8.75rem)] font-black leading-[0.82] tracking-normal text-navy">
+            <h1 className="max-w-4xl text-[clamp(2.8rem,15vw,8.75rem)] font-black leading-[0.82] tracking-normal text-navy sm:text-[clamp(3.4rem,10vw,8.75rem)] lg:text-[clamp(3.4rem,8vw,8.75rem)]">
               Our Services
             </h1>
           </div>
@@ -154,12 +154,12 @@ function ServicesShowcase() {
 
       <div
         ref={showcaseRef}
-        className="relative mt-8 hidden h-screen w-screen items-center overflow-hidden lg:flex lg:mt-12"
+        className="relative mt-8 hidden h-[100svh] w-full items-center overflow-hidden lg:flex lg:mt-12"
         style={
           {
             "--service-card-height": "calc(var(--service-card-width) * 672 / 1584)",
-            "--service-card-top": "calc((100vh - var(--service-card-height)) / 2)",
-            "--service-card-width": "min(72vw, 1280px)",
+            "--service-card-top": "calc((100svh - var(--service-card-height)) / 2)",
+            "--service-card-width": "min(76vw, 1280px)",
           } as CSSProperties
         }
       >
@@ -254,7 +254,7 @@ function ServiceCard({
         "group relative overflow-hidden bg-navy text-off-white shadow-[0_26px_80px_rgba(25,46,69,0.16)]",
         pinned
           ? "h-[var(--service-card-height)] w-[var(--service-card-width)] shrink-0 rounded-[1.75rem] border border-navy/10"
-          : "aspect-[1584/672] rounded-[1.25rem] border border-navy/10 sm:rounded-[1.75rem] lg:rounded-[2rem]",
+          : "min-h-[31rem] rounded-[1.25rem] border border-navy/10 sm:min-h-[34rem] sm:rounded-[1.75rem] md:min-h-[36rem] lg:aspect-[1584/672] lg:min-h-0 lg:rounded-[2rem]",
         className,
       )}
     >
@@ -272,12 +272,12 @@ function ServiceCard({
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(25,46,69,0.96)_0%,rgba(25,46,69,0.88)_31%,rgba(25,46,69,0.48)_59%,rgba(66,34,229,0.1)_100%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_84%,rgba(224,255,4,0.16),transparent_31%)]" />
 
-      <div className="relative flex h-full max-w-[43rem] flex-col justify-center p-3 sm:p-8 lg:p-12 xl:p-14">
-        <p className="mb-2 font-mono text-[0.63rem] font-black tracking-[0.16em] text-lime sm:mb-5 sm:text-sm">
+      <div className="relative flex h-full max-w-[43rem] flex-col justify-center p-5 sm:p-8 lg:p-12 xl:p-14">
+        <p className="mb-4 font-mono text-xs font-black tracking-[0.16em] text-lime sm:mb-5 sm:text-sm">
           ({String(index + 1).padStart(2, "0")})
         </p>
 
-        <h2 className="max-w-[13ch] text-[clamp(1.2rem,6.6vw,7.1rem)] font-black leading-[0.86] tracking-normal">
+        <h2 className="w-full max-w-full break-words text-[clamp(2.15rem,9.4vw,3.15rem)] font-black leading-[0.9] tracking-normal sm:text-[clamp(3rem,8vw,5.4rem)] md:text-[clamp(3.4rem,7vw,6rem)] lg:max-w-[13ch] lg:text-[clamp(3rem,6.6vw,7.1rem)] lg:leading-[0.86]">
           <span className="text-lime">{service.title.split(" ")[0]}</span>
           {service.title.includes(" ") ? (
             <>
@@ -287,21 +287,21 @@ function ServiceCard({
           ) : null}
         </h2>
 
-        <p className="mt-2 line-clamp-2 max-w-xl text-[0.63rem] font-medium leading-4 text-white/78 sm:mt-6 sm:text-base sm:leading-7 lg:line-clamp-none">
+        <p className="mt-4 max-w-xl text-sm font-medium leading-6 text-white/78 sm:mt-6 sm:text-base sm:leading-7">
           {service.description}
         </p>
 
-        <div className="mt-3 sm:mt-7">
+        <div className="mt-5 sm:mt-7">
           <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 rounded-md bg-lime px-3 py-2 text-[0.68rem] font-black text-navy transition-colors hover:bg-off-white sm:gap-3 sm:px-5 sm:py-3 sm:text-sm"
+            href="/#contact"
+            className="inline-flex items-center gap-2 rounded-md bg-lime px-4 py-3 text-xs font-black text-navy transition-colors hover:bg-off-white sm:gap-3 sm:px-5 sm:py-3 sm:text-sm"
           >
             Discover More
             <ArrowUpRight aria-hidden="true" className="size-3.5 sm:size-[18px]" />
           </Link>
         </div>
 
-        <div className="mt-7 hidden max-w-2xl flex-wrap gap-x-5 gap-y-2 sm:flex">
+        <div className="mt-6 flex max-w-2xl flex-wrap gap-x-4 gap-y-2 sm:mt-7 sm:gap-x-5">
           {service.tags.map((tag, tagIndex) => (
             <span
               key={tag}

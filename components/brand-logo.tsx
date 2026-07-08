@@ -23,8 +23,8 @@ export function BrandLogo({
       src={isFullLogo ? brandAssets.logoWithText : brandAssets.simpleLogo}
       alt={decorative ? "" : "Shams Agency"}
       aria-hidden={decorative ? true : undefined}
-      width={isFullLogo ? 214 : 28}
-      height={isFullLogo ? 96 : 28}
+      width={isFullLogo ? 1619 : 28}
+      height={isFullLogo ? 971 : 28}
       priority={priority}
       className={cn("object-contain", isFullLogo && "h-auto", className)}
     />

@@ -80,12 +80,12 @@ export function AboutAgency() {
   const revealRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: revealRef,
-    offset: ["start 84%", "end 24%"],
+    offset: ["start 82%", "end 48%"],
   });
   const viewport = { once: false, margin: "-15% 0px", amount: 0.2 };
 
   return (
-    <section className="relative overflow-hidden py-12 sm:py-16 lg:py-20">
+    <section id="about" className="relative scroll-mt-4 overflow-hidden py-12 sm:py-16 lg:py-20">
       <div className="absolute left-1/2 top-0 -z-10 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-lime/20 blur-3xl" />
 
       <Container>
@@ -157,7 +157,7 @@ function ScrollScrubTextReveal({
 
   if (reduceMotion) {
     return (
-      <h2 className="max-w-5xl text-[clamp(2rem,3.65vw,4rem)] font-black leading-[1.04] tracking-normal text-navy">
+      <h2 className="max-w-5xl text-[clamp(1.9rem,9vw,4rem)] font-black leading-[1.04] tracking-normal text-navy sm:text-[clamp(2rem,5.6vw,4rem)] lg:text-[clamp(2rem,3.65vw,4rem)]">
         We&apos;re the digital department inside{" "}
         <span className="text-purple">Shams Djazair</span>, building the online systems that help
         clean-energy ideas move faster.
@@ -168,7 +168,7 @@ function ScrollScrubTextReveal({
   return (
     <h2
       aria-label={label}
-      className="max-w-5xl text-[clamp(2rem,3.65vw,4rem)] font-black leading-[1.04] tracking-normal"
+      className="max-w-5xl text-[clamp(1.9rem,9vw,4rem)] font-black leading-[1.04] tracking-normal sm:text-[clamp(2rem,5.6vw,4rem)] lg:text-[clamp(2rem,3.65vw,4rem)]"
     >
       {aboutHeadline.map((word, index) => (
         <RevealWord
@@ -176,9 +176,9 @@ function ScrollScrubTextReveal({
           highlight={"highlight" in word}
           index={index}
           progress={progress}
-          revealSize={0.14}
+          revealSize={0.08}
           segmentStart={0}
-          segmentSpan={0.46}
+          segmentSpan={0.28}
           total={aboutHeadline.length}
           word={word.text}
         />
@@ -231,7 +231,7 @@ function ScrollScrubAboutWord({
   progress: MotionValue<number>;
   reduceMotion: boolean | null;
 }) {
-  const opacity = useTransform(progress, [0.24, 0.58], [0.025, 0.1]);
+  const opacity = useTransform(progress, [0.14, 0.36], [0.025, 0.1]);
 
   if (reduceMotion) {
     return (
@@ -264,7 +264,7 @@ function ScrollScrubParagraphReveal({
 
   if (reduceMotion) {
     return (
-      <p className="max-w-5xl text-[clamp(1.2rem,2vw,2rem)] font-semibold leading-[1.35] text-navy/60">
+      <p className="max-w-5xl text-[clamp(1.05rem,4.6vw,2rem)] font-semibold leading-[1.35] text-navy/60 sm:text-[clamp(1.15rem,3vw,2rem)] lg:text-[clamp(1.2rem,2vw,2rem)]">
         As part of one of Algeria&apos;s solar-energy players, Shams Agency brings a
         builder&apos;s mindset to branding, websites, apps, dashboards and AI tools. We connect the
         parent company&apos;s renewable-energy mission with digital products that{" "}
@@ -276,7 +276,7 @@ function ScrollScrubParagraphReveal({
   return (
     <p
       aria-label={label}
-      className="max-w-5xl text-[clamp(1.2rem,2vw,2rem)] font-semibold leading-[1.35]"
+      className="max-w-5xl text-[clamp(1.05rem,4.6vw,2rem)] font-semibold leading-[1.35] sm:text-[clamp(1.15rem,3vw,2rem)] lg:text-[clamp(1.2rem,2vw,2rem)]"
     >
       {aboutParagraph.map((word, index) => (
         <RevealParagraphWord
@@ -305,8 +305,8 @@ function RevealParagraphWord({
   total: number;
   word: string;
 }) {
-  const start = Math.min(0.42 + (index / total) * 0.48, 0.94);
-  const end = Math.min(start + 0.1, 1);
+  const start = Math.min(0.24 + (index / total) * 0.34, 0.9);
+  const end = Math.min(start + 0.07, 1);
   const opacity = useTransform(progress, [start, end], [0.24, 1]);
   const color = useTransform(
     progress,

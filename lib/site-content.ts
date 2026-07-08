@@ -8,17 +8,18 @@ import type {
 } from "@/types/site";
 
 export const brandAssets = {
-  hero: "/images/herosectionimage-v2.png",
+  hero: "/images/cta/image%2014.png",
   logoWithText: "/images/logowithtext.png",
   simpleLogo: "/images/shams_agency_icon_cropped.png",
 } as const;
 
 export const siteNavigation: NavItem[] = [
-  { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/work", label: "Work" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/#home", label: "Home" },
+  { href: "/#about", label: "About" },
+  { href: "/#services", label: "Services" },
+  { href: "/#team", label: "Team" },
+  { href: "/#strategy", label: "Strategy" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export const heroServices = [

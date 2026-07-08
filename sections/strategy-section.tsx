@@ -55,7 +55,7 @@ export function StrategySection() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="min-h-screen overflow-x-hidden bg-navy px-5 py-12 text-off-white sm:px-8 sm:py-16 lg:flex lg:items-center lg:px-[3.75rem] lg:py-20">
+    <section id="strategy" className="min-h-[100svh] scroll-mt-4 overflow-x-hidden bg-navy px-5 py-12 text-off-white sm:px-8 sm:py-16 lg:flex lg:items-center lg:px-[3.75rem] lg:py-20">
       <motion.div
         initial={reduceMotion ? false : "hidden"}
         whileInView={reduceMotion ? undefined : "visible"}
@@ -69,7 +69,7 @@ export function StrategySection() {
               <BrandLogo decorative variant="mark" className="size-5 shrink-0" />
               Our Strategy
             </div>
-            <h2 className="max-w-[62rem] text-[clamp(2.5rem,5.5vw,6rem)] font-black leading-[0.88] tracking-normal">
+            <h2 className="max-w-[62rem] text-[clamp(2.45rem,12vw,6rem)] font-black leading-[0.88] tracking-normal sm:text-[clamp(3rem,8vw,6rem)] lg:text-[clamp(2.5rem,5.5vw,6rem)]">
               Our <span className="text-lime">strategy</span> of working with you
             </h2>
           </motion.div>

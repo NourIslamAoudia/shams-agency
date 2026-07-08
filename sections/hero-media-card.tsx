@@ -28,7 +28,7 @@ export function HeroMediaCard() {
       whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
       viewport={viewport}
       transition={{ delay: 0.45, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-      className="relative mt-5 h-[22rem] overflow-hidden rounded-[1.7rem] bg-navy shadow-[0_24px_70px_rgba(25,46,69,0.16)] sm:h-[27rem] lg:h-[clamp(18.5rem,42vh,31rem)] lg:rounded-[2rem]"
+      className="relative mt-5 h-[18rem] overflow-hidden rounded-[1.35rem] bg-navy shadow-[0_24px_70px_rgba(25,46,69,0.16)] sm:h-[27rem] sm:rounded-[1.7rem] lg:h-[clamp(18.5rem,42vh,31rem)] lg:rounded-[2rem]"
     >
       <motion.div
         animate={reduceMotion ? undefined : { scale: [1.03, 1.055, 1.03], x: ["0%", "-1%", "0%"] }}
@@ -55,7 +55,7 @@ export function HeroMediaCard() {
         className="absolute bottom-[8%] left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-base font-semibold text-white lg:flex"
       >
         <IconButton
-          href="/work"
+          href="/#services"
           label="View projects"
           className="size-[clamp(4.1rem,5.5vw,5.4rem)] border-2 border-lime shadow-2xl"
         >

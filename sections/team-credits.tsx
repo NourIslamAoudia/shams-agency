@@ -64,7 +64,7 @@ export function TeamCredits() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="pb-16 pt-6 sm:pb-24 lg:pb-28">
+    <section id="team" className="scroll-mt-4 pb-16 pt-6 sm:pb-24 lg:pb-28">
       <Container>
         <motion.div
           initial={reduceMotion ? false : "hidden"}
@@ -82,7 +82,7 @@ export function TeamCredits() {
                 <BrandLogo decorative variant="mark" className="size-5 shrink-0" />
                 The Team
               </div>
-              <h2 className="max-w-5xl text-[clamp(3rem,7.4vw,7.25rem)] font-black leading-[0.84] tracking-normal text-navy">
+              <h2 className="max-w-5xl text-[clamp(2.55rem,13vw,7.25rem)] font-black leading-[0.84] tracking-normal text-navy sm:text-[clamp(3rem,9vw,7.25rem)] lg:text-[clamp(3rem,7.4vw,7.25rem)]">
                 Built by <span className="text-lime">people</span> with real{" "}
                 <span className="text-lime">project work.</span>
               </h2>
@@ -119,18 +119,18 @@ export function TeamCredits() {
                         className="object-cover"
                       />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       {"profileUrl" in member ? (
                         <a
                           href={member.profileUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-2xl font-black leading-none text-navy transition-colors hover:text-purple sm:text-3xl"
+                          className="break-words text-xl font-black leading-none text-navy transition-colors hover:text-purple sm:text-3xl"
                         >
                           {member.name}
                         </a>
                       ) : (
-                        <h3 className="text-2xl font-black leading-none text-navy sm:text-3xl">
+                        <h3 className="break-words text-xl font-black leading-none text-navy sm:text-3xl">
                           {member.name}
                         </h3>
                       )}
@@ -161,7 +161,7 @@ export function TeamCredits() {
                   </div>
                 </div>
 
-                <div className="grid max-h-0 gap-5 overflow-hidden opacity-0 transition-all duration-500 group-hover:max-h-96 group-hover:pt-6 group-hover:opacity-100 group-focus:max-h-96 group-focus:pt-6 group-focus:opacity-100 lg:grid-cols-[0.5fr_0.28fr_0.22fr]">
+                <div className="grid gap-5 pt-6 opacity-100 lg:max-h-0 lg:overflow-hidden lg:pt-0 lg:opacity-0 lg:transition-all lg:duration-500 lg:group-hover:max-h-96 lg:group-hover:pt-6 lg:group-hover:opacity-100 lg:group-focus:max-h-96 lg:group-focus:pt-6 lg:group-focus:opacity-100 lg:grid-cols-[0.5fr_0.28fr_0.22fr]">
                   <div>
                     <p className="max-w-2xl text-base font-bold leading-7 text-navy/76">
                       {member.summary}
@@ -220,7 +220,7 @@ function ProjectBadge({
   year: string;
 }) {
   return (
-    <p className="inline-flex items-center gap-2 rounded-full border border-navy/10 bg-white/70 px-2.5 py-1 text-xs font-black text-navy/70 shadow-sm lg:inline-flex">
+    <p className="inline-flex max-w-full items-center gap-2 rounded-full border border-navy/10 bg-white/70 px-2.5 py-1 text-xs font-black text-navy/70 shadow-sm lg:inline-flex">
       <CompanyLogo company={company} />
       <span>{label}</span>
       <span className="text-navy/32">-</span>
