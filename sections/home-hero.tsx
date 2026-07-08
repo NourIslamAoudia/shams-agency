@@ -11,9 +11,9 @@ export function HomeHero() {
   const viewport = { once: false, amount: 0.35 };
 
   return (
-    <section id="home" className="scroll-mt-4 overflow-hidden pb-4 pt-1 lg:pb-0 lg:pt-1">
+    <section id="home" className="scroll-mt-4 overflow-hidden pb-6 pt-1 lg:pb-2 lg:pt-1">
       <Container>
-        <div className="grid gap-5 lg:grid-cols-[1.7fr_1fr] lg:items-end">
+        <div className="grid gap-5 lg:grid-cols-[1.55fr_0.85fr] lg:items-end xl:grid-cols-[1.7fr_1fr]">
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: 24 }}
             whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
@@ -25,7 +25,7 @@ export function HomeHero() {
               whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
               viewport={viewport}
               transition={{ delay: 0.25, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="max-w-5xl text-[clamp(2.25rem,11.5vw,4.85rem)] font-black uppercase leading-[0.92] tracking-normal text-navy sm:text-[clamp(2.65rem,7vw,4.85rem)] lg:text-[clamp(2.65rem,4.55vw,4.85rem)]"
+              className="max-w-5xl text-[clamp(2.15rem,11vw,4.85rem)] font-black uppercase leading-[0.92] tracking-normal text-navy sm:text-[clamp(2.65rem,7vw,4.85rem)] lg:text-[clamp(2.65rem,4.35vw,4.85rem)]"
             >
               We build <span className="text-lime">digital</span>
               <br />
@@ -40,7 +40,7 @@ export function HomeHero() {
             whileInView={reduceMotion ? undefined : { opacity: 1, x: 0 }}
             viewport={viewport}
             transition={{ delay: 0.38, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-md border-l-2 border-lime pl-5 text-base leading-7 text-navy/90 sm:text-lg lg:mb-4"
+            className="max-w-xl border-l-2 border-lime pl-5 text-base leading-7 text-navy/90 sm:text-lg lg:mb-4 lg:max-w-md"
           >
             From branding to web development, mobile apps, desktop systems and AI solutions - we
             help businesses grow in the{" "}

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, type CSSProperties } from "react";
+import { useEffect, useRef } from "react";
 import { useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -18,20 +18,20 @@ export function ServicesOverview() {
   return (
     <section id="services" className="scroll-mt-4 pb-14 pt-6 sm:pb-20 lg:pb-24">
       <Container>
-        <div className="grid gap-6 border-t border-navy/10 pt-8 lg:grid-cols-[0.72fr_0.58fr] lg:items-end lg:pt-10">
+        <div className="grid gap-6 border-t border-navy/10 pt-8 lg:grid-cols-[0.72fr_0.58fr] lg:items-end lg:pt-12">
           <div>
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-navy/10 bg-white/60 px-3 py-1 text-xs font-semibold text-navy/70 shadow-sm">
               <BrandLogo decorative variant="mark" className="size-5 shrink-0" />
-              Our Services
+              Services
             </div>
-            <h1 className="max-w-4xl text-[clamp(2.8rem,15vw,8.75rem)] font-black leading-[0.82] tracking-normal text-navy sm:text-[clamp(3.4rem,10vw,8.75rem)] lg:text-[clamp(3.4rem,8vw,8.75rem)]">
+            <h2 className="max-w-4xl text-[clamp(2.45rem,12vw,6.5rem)] font-black leading-[0.88] tracking-normal text-navy sm:text-[clamp(3rem,8vw,6.5rem)] lg:text-[clamp(3rem,5.8vw,6.5rem)]">
               Our Services
-            </h1>
+            </h2>
           </div>
 
           <p className="max-w-xl text-base font-semibold leading-7 text-navy/62 sm:text-lg">
-            Digital systems, deployment and support services built for Shams Djazair and teams that
-            need reliable technology with a clean visual edge.
+            We help plan, build and maintain the web, mobile and internal systems that support real
+            operations, not just launch-day impressions.
           </p>
         </div>
       </Container>
@@ -64,69 +64,12 @@ function ServicesShowcase() {
     const ctx = gsap.context(() => {
       media = gsap.matchMedia();
 
+      media.add("(max-width: 1023px)", () => {
+        return setupPinnedServiceCards(deck, showcase, 20);
+      });
+
       media.add("(min-width: 1024px)", () => {
-        const cards = Array.from(deck.querySelectorAll<HTMLElement>("[data-pinned-service-card]"));
-        const peek = 64;
-
-        if (cards.length === 0) {
-          return;
-        }
-
-        const getLeftExitX = () => {
-          const cardWidth = cards[0]?.offsetWidth ?? 0;
-          return -(cardWidth + window.innerWidth * 0.08);
-        };
-
-        gsap.set(cards, {
-          autoAlpha: 1,
-          force3D: true,
-          x: (index) => index * peek,
-          zIndex: (index) => cards.length - index,
-        });
-
-        const timeline = gsap.timeline({
-          defaults: { ease: "none" },
-          scrollTrigger: {
-            anticipatePin: 1,
-            end: () => `+=${cards.length * window.innerHeight}`,
-            invalidateOnRefresh: true,
-            pin: true,
-            scrub: 1,
-            start: "top top",
-            trigger: showcase,
-          },
-        });
-
-        cards.forEach((card, index) => {
-          timeline.to(
-            card,
-            {
-              autoAlpha: 0,
-              duration: 1,
-              x: () => getLeftExitX(),
-            },
-            index,
-          );
-
-          if (cards[index + 1]) {
-            timeline.to(
-              cards.slice(index + 1),
-              {
-                duration: 1,
-                x: (cardIndex) => cardIndex * peek,
-              },
-              index,
-            );
-          }
-        });
-
-        ScrollTrigger.refresh();
-
-        return () => {
-          timeline.scrollTrigger?.kill();
-          timeline.kill();
-          gsap.set(cards, { clearProps: "opacity,visibility,transform,zIndex" });
-        };
+        return setupPinnedServiceCards(deck, showcase, 64);
       });
     }, showcase);
 
@@ -145,83 +88,124 @@ function ServicesShowcase() {
   }
 
   return (
-    <>
-      <div className="lg:hidden">
-        <Container>
-          <StaticServicesShowcase />
-        </Container>
+    <div
+      ref={showcaseRef}
+      className="relative mt-8 flex h-[100svh] w-full items-center overflow-hidden bg-off-white [--service-card-height:min(72svh,34rem)] [--service-card-top:calc((100svh-var(--service-card-height))/2)] [--service-card-width:min(86vw,25rem)] sm:[--service-card-height:min(68svh,36rem)] sm:[--service-card-width:min(82vw,36rem)] lg:mt-12 lg:[--service-card-height:calc(var(--service-card-width)*672/1584)] lg:[--service-card-width:min(76vw,1280px)]"
+    >
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="absolute left-[4vw] right-[4vw] top-[16vh] h-px bg-navy/10" />
+        <div className="absolute bottom-[12vh] left-[4vw] right-[4vw] h-px bg-navy/10" />
       </div>
 
-      <div
-        ref={showcaseRef}
-        className="relative mt-8 hidden h-[100svh] w-full items-center overflow-hidden lg:flex lg:mt-12"
-        style={
-          {
-            "--service-card-height": "calc(var(--service-card-width) * 672 / 1584)",
-            "--service-card-top": "calc((100svh - var(--service-card-height)) / 2)",
-            "--service-card-width": "min(76vw, 1280px)",
-          } as CSSProperties
-        }
-      >
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-          <div className="absolute left-[4vw] top-[7vh] text-[13vw] font-black leading-none tracking-normal text-navy/[0.035]">
-            SERVICES
-          </div>
-          <div className="absolute left-[4vw] right-[4vw] top-[16vh] h-px bg-navy/10" />
-          <div className="absolute bottom-[12vh] left-[4vw] right-[4vw] h-px bg-navy/10" />
-          <div className="absolute right-[7vw] top-[18vh] h-24 w-24 rounded-full border border-navy/10" />
-          <div className="absolute bottom-[15vh] right-[12vw] h-3 w-3 rounded-full bg-lime shadow-[0_0_32px_rgba(224,255,4,0.75)]" />
+      <div className="pointer-events-none absolute left-[4vw] top-[6vh] z-30 flex items-center gap-3 sm:top-[8vh]">
+        <div className="inline-flex items-center gap-2 rounded-full border border-navy/10 bg-white/70 px-3 py-1 text-xs font-semibold text-navy/70 shadow-sm backdrop-blur">
+          <BrandLogo decorative variant="mark" className="size-5 shrink-0" />
+          Service focus
         </div>
+      </div>
 
-        <div className="pointer-events-none absolute left-[4vw] top-[8vh] z-30 flex items-center gap-3">
-          <div className="inline-flex items-center gap-2 rounded-full border border-navy/10 bg-white/70 px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-navy/70 shadow-sm backdrop-blur">
-            <BrandLogo decorative variant="mark" className="size-5 shrink-0" />
-            Service Stack
-          </div>
-          <span className="font-mono text-xs font-black tracking-[0.18em] text-navy/45">
-            Scroll to explore
+      <div className="pointer-events-none absolute right-[4vw] top-[8vh] z-30 hidden text-right sm:block">
+        <p className="font-mono text-xs font-black tracking-[0.14em] text-navy/45">
+          {String(servicesPageItems.length).padStart(2, "0")} SERVICES
+        </p>
+        <p className="mt-1 max-w-56 text-sm font-semibold leading-5 text-navy/60">
+          Planning, delivery and long-term support from one team.
+        </p>
+      </div>
+
+      <div ref={deckRef} className="relative h-full w-full">
+        {servicesPageItems.map((service, index) => (
+          <ServiceCard
+            key={service.title}
+            className="absolute left-[5vw] top-[var(--service-card-top)] sm:left-[4vw]"
+            dataPinnedCard
+            index={index}
+            pinned
+            service={service}
+          />
+        ))}
+      </div>
+
+      <div className="pointer-events-none absolute bottom-[6vh] left-[4vw] z-30 hidden gap-3 sm:flex lg:bottom-[7vh]">
+        {["Plan", "Design", "Build", "Support"].map((item) => (
+          <span
+            key={item}
+            className="rounded-full border border-navy/10 bg-white/60 px-4 py-2 text-xs font-semibold text-navy/65 shadow-sm backdrop-blur"
+          >
+            {item}
           </span>
-        </div>
-
-        <div className="pointer-events-none absolute right-[4vw] top-[8vh] z-30 text-right">
-          <p className="font-mono text-xs font-black tracking-[0.18em] text-navy/45">
-            {String(servicesPageItems.length).padStart(2, "0")} SERVICES
-          </p>
-          <p className="mt-1 max-w-56 text-sm font-semibold leading-5 text-navy/60">
-            Digital work, launch support and long-term care in one flow.
-          </p>
-        </div>
-
-        <div ref={deckRef} className="relative h-full w-full">
-          {servicesPageItems.map((service, index) => (
-            <ServiceCard
-              key={service.title}
-              className="absolute left-[4vw] top-[var(--service-card-top)]"
-              dataPinnedCard
-              index={index}
-              pinned
-              service={service}
-            />
-          ))}
-        </div>
-
-        <div className="pointer-events-none absolute bottom-[7vh] left-[4vw] z-30 flex gap-3">
-          {["Strategy", "Build", "Deploy", "Support"].map((item) => (
-            <span
-              key={item}
-              className="rounded-full border border-navy/10 bg-white/55 px-4 py-2 text-xs font-black text-navy/65 shadow-sm backdrop-blur"
-            >
-              {item}
-            </span>
-          ))}
-        </div>
-
-        <div className="pointer-events-none absolute bottom-[7vh] right-[4vw] z-30 font-mono text-xs font-black tracking-[0.18em] text-navy/45">
-          Cards exit left / reverse on scroll up
-        </div>
+        ))}
       </div>
-    </>
+    </div>
   );
+}
+
+function setupPinnedServiceCards(
+  deck: HTMLDivElement,
+  showcase: HTMLDivElement,
+  peek: number,
+) {
+  const cards = Array.from(deck.querySelectorAll<HTMLElement>("[data-pinned-service-card]"));
+
+  if (cards.length === 0) {
+    return;
+  }
+
+  const getLeftExitX = () => {
+    const cardWidth = cards[0]?.offsetWidth ?? 0;
+    return -(cardWidth + window.innerWidth * 0.08);
+  };
+
+  gsap.set(cards, {
+    autoAlpha: 1,
+    force3D: true,
+    x: (index) => index * peek,
+    zIndex: (index) => cards.length - index,
+  });
+
+  const timeline = gsap.timeline({
+    defaults: { ease: "none" },
+    scrollTrigger: {
+      anticipatePin: 1,
+      end: () => `+=${cards.length * window.innerHeight}`,
+      invalidateOnRefresh: true,
+      pin: true,
+      scrub: 1,
+      start: "top top",
+      trigger: showcase,
+    },
+  });
+
+  cards.forEach((card, index) => {
+    timeline.to(
+      card,
+      {
+        autoAlpha: 0,
+        duration: 1,
+        x: () => getLeftExitX(),
+      },
+      index,
+    );
+
+    if (cards[index + 1]) {
+      timeline.to(
+        cards.slice(index + 1),
+        {
+          duration: 1,
+          x: (cardIndex) => cardIndex * peek,
+        },
+        index,
+      );
+    }
+  });
+
+  ScrollTrigger.refresh();
+
+  return () => {
+    timeline.scrollTrigger?.kill();
+    timeline.kill();
+    gsap.set(cards, { clearProps: "opacity,visibility,transform,zIndex" });
+  };
 }
 
 function StaticServicesShowcase() {
@@ -258,62 +242,64 @@ function ServiceCard({
         className,
       )}
     >
-      <div aria-hidden="true" className="absolute inset-0">
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-[58%] sm:inset-0 sm:h-auto">
         <Image
           src={service.image}
           alt=""
           fill
           sizes="(min-width: 1584px) 1584px, 100vw"
-          className="object-cover"
+          className="object-cover object-[82%_center] sm:object-[68%_center] lg:object-center"
           priority={index === 0}
         />
       </div>
 
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(25,46,69,0.96)_0%,rgba(25,46,69,0.88)_31%,rgba(25,46,69,0.48)_59%,rgba(66,34,229,0.1)_100%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_84%,rgba(224,255,4,0.16),transparent_31%)]" />
+      <div className="absolute inset-0 hidden bg-[linear-gradient(90deg,rgba(25,46,69,0.96)_0%,rgba(25,46,69,0.88)_31%,rgba(25,46,69,0.48)_59%,rgba(66,34,229,0.1)_100%)] sm:block" />
+      <div className="absolute inset-x-0 bottom-0 h-[46%] bg-[linear-gradient(180deg,rgba(25,46,69,0)_0%,rgba(25,46,69,0.98)_28%,rgba(25,46,69,1)_100%)] sm:hidden" />
 
-      <div className="relative flex h-full max-w-[43rem] flex-col justify-center p-5 sm:p-8 lg:p-12 xl:p-14">
-        <p className="mb-4 font-mono text-xs font-black tracking-[0.16em] text-lime sm:mb-5 sm:text-sm">
-          ({String(index + 1).padStart(2, "0")})
-        </p>
+      <div className="relative flex h-full max-w-[43rem] flex-col justify-end p-4 sm:justify-center sm:p-8 lg:p-12 xl:p-14">
+        <div className="sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-0">
+          <p className="mb-2 font-mono text-[0.68rem] font-black tracking-[0.14em] text-lime sm:mb-5 sm:text-sm">
+            ({String(index + 1).padStart(2, "0")})
+          </p>
 
-        <h2 className="w-full max-w-full break-words text-[clamp(2.15rem,9.4vw,3.15rem)] font-black leading-[0.9] tracking-normal sm:text-[clamp(3rem,8vw,5.4rem)] md:text-[clamp(3.4rem,7vw,6rem)] lg:max-w-[13ch] lg:text-[clamp(3rem,6.6vw,7.1rem)] lg:leading-[0.86]">
-          <span className="text-lime">{service.title.split(" ")[0]}</span>
-          {service.title.includes(" ") ? (
-            <>
-              <br />
-              {service.title.split(" ").slice(1).join(" ")}
-            </>
-          ) : null}
-        </h2>
+          <h2 className="w-full max-w-full break-words text-[clamp(1.65rem,7.8vw,2.35rem)] font-black leading-[0.92] tracking-normal sm:text-[clamp(3rem,8vw,5.4rem)] md:text-[clamp(3.4rem,7vw,6rem)] lg:max-w-[13ch] lg:text-[clamp(3rem,6.6vw,7.1rem)] lg:leading-[0.86]">
+            <span className="text-lime">{service.title.split(" ")[0]}</span>
+            {service.title.includes(" ") ? (
+              <>
+                <br />
+                {service.title.split(" ").slice(1).join(" ")}
+              </>
+            ) : null}
+          </h2>
 
-        <p className="mt-4 max-w-xl text-sm font-medium leading-6 text-white/78 sm:mt-6 sm:text-base sm:leading-7">
-          {service.description}
-        </p>
+          <p className="mt-2 max-w-xl text-xs font-medium leading-5 text-white/82 sm:mt-6 sm:text-base sm:leading-7">
+            {service.description}
+          </p>
 
-        <div className="mt-5 sm:mt-7">
-          <Link
-            href="/#contact"
-            className="inline-flex items-center gap-2 rounded-md bg-lime px-4 py-3 text-xs font-black text-navy transition-colors hover:bg-off-white sm:gap-3 sm:px-5 sm:py-3 sm:text-sm"
-          >
-            Discover More
-            <ArrowUpRight aria-hidden="true" className="size-3.5 sm:size-[18px]" />
-          </Link>
-        </div>
-
-        <div className="mt-6 flex max-w-2xl flex-wrap gap-x-4 gap-y-2 sm:mt-7 sm:gap-x-5">
-          {service.tags.map((tag, tagIndex) => (
-            <span
-              key={tag}
-              className={
-                tagIndex === 0
-                  ? "text-xs font-semibold text-white/80"
-                  : "text-xs font-semibold text-lime"
-              }
+          <div className="mt-3 sm:mt-7">
+            <Link
+              href="/#contact"
+              className="inline-flex items-center gap-2 rounded-md bg-lime px-3 py-2 text-xs font-black text-navy transition-colors hover:bg-off-white sm:gap-3 sm:px-5 sm:py-3 sm:text-sm"
             >
-              {tag}
-            </span>
-          ))}
+              Talk to us
+              <ArrowUpRight aria-hidden="true" className="size-3.5 sm:size-[18px]" />
+            </Link>
+          </div>
+
+          <div className="mt-3 flex max-w-2xl flex-wrap gap-x-3 gap-y-1.5 sm:mt-7 sm:gap-x-5 sm:gap-y-2">
+            {service.tags.map((tag, tagIndex) => (
+              <span
+                key={tag}
+                className={
+                  tagIndex === 0
+                    ? "text-[0.68rem] font-semibold text-white/80 sm:text-xs"
+                    : "text-[0.68rem] font-semibold text-lime sm:text-xs"
+                }
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </article>

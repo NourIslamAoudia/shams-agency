@@ -15,7 +15,7 @@ const teamMembers = [
     role: "Front End",
     image: "/images/team/ramy.png",
     summary:
-      "Focused on clean interfaces, responsive builds and front-end systems for modern product teams.",
+      "Turns interface designs into fast, responsive front-end experiences with attention to detail.",
     projects: [
       { company: "djezzy", label: "Djezzy One", year: "2025" },
       { company: "shams", label: "Shams", year: "2026" },
@@ -27,7 +27,7 @@ const teamMembers = [
     role: "Full Stack",
     image: "/images/team/graba.jpg",
     summary:
-      "Builds complete product flows from interface to backend logic, with practical deployment experience.",
+      "Connects product interfaces with backend logic, APIs and deployment workflows.",
     projects: [
       { company: "mobilis", label: "Mobilis", year: "2025" },
       { company: "shams", label: "Shams", year: "2026" },
@@ -40,7 +40,7 @@ const teamMembers = [
     image: "/images/team/islam.jpg",
     profileUrl:
       "https://www.linkedin.com/in/nour-islam-aoudia-594b5026a/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3B54AXGOzWT5ScNdvG7IkfyA%3D%3D",
-    summary: "Works on backend foundations, data flow and the systems that keep products reliable.",
+    summary: "Builds backend foundations, data flows and services that keep products reliable.",
     projects: [{ company: "shams", label: "Shams", year: "2026" }],
     skills: ["Backend", "Databases", "Security", "Services"],
   },
@@ -80,37 +80,34 @@ export function TeamCredits() {
             <div>
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-navy/10 bg-white/65 px-3 py-1 text-xs font-semibold text-navy/70 shadow-sm">
                 <BrandLogo decorative variant="mark" className="size-5 shrink-0" />
-                The Team
+                Team
               </div>
-              <h2 className="max-w-5xl text-[clamp(2.55rem,13vw,7.25rem)] font-black leading-[0.84] tracking-normal text-navy sm:text-[clamp(3rem,9vw,7.25rem)] lg:text-[clamp(3rem,7.4vw,7.25rem)]">
-                Built by <span className="text-lime">people</span> with real{" "}
-                <span className="text-lime">project work.</span>
+              <h2 className="max-w-5xl text-[clamp(2.35rem,11vw,6.5rem)] font-black leading-[0.88] tracking-normal text-navy sm:text-[clamp(2.9rem,8vw,6.5rem)] lg:text-[clamp(3rem,6.4vw,6.5rem)]">
+                The people behind the work
               </h2>
             </div>
 
             <p className="max-w-xl text-base font-semibold leading-7 text-navy/62 sm:text-lg">
-              Three builders behind Shams digital work, each bringing hands-on experience from
-              <span className="font-black text-lime"> telecom</span>,{" "}
-              <span className="font-black text-lime">product</span> and{" "}
-              <span className="font-black text-lime">backend</span> systems.
+              A small technical team with hands-on experience across telecom, product interfaces
+              and backend systems.
             </p>
           </motion.div>
 
-          <motion.div variants={sectionVariants} className="mt-10 space-y-4 lg:mt-14">
+          <motion.div variants={sectionVariants} className="mt-9 space-y-4 lg:mt-12">
             {teamMembers.map((member, index) => (
               <motion.article
                 key={member.name}
                 tabIndex={0}
                 variants={itemVariants}
-                className="group overflow-hidden rounded-[1.35rem] border border-navy/10 bg-white/55 p-5 shadow-[0_18px_60px_rgba(25,46,69,0.07)] outline-none backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:bg-lime hover:shadow-[0_28px_90px_rgba(25,46,69,0.16)] focus:bg-lime focus:shadow-[0_28px_90px_rgba(25,46,69,0.16)] sm:p-6 lg:p-7"
+                className="group relative overflow-hidden rounded-[1.1rem] border border-navy/10 bg-white/75 p-5 shadow-[0_18px_55px_rgba(25,46,69,0.06)] outline-none backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:border-navy/10 hover:bg-white hover:shadow-[0_24px_70px_rgba(25,46,69,0.1)] focus:border-navy/10 focus:bg-white sm:p-6 lg:p-7"
               >
-                <div className="grid gap-5 lg:grid-cols-[0.08fr_0.62fr_0.22fr_0.08fr] lg:items-center">
-                  <p className="font-mono text-xs font-black tracking-[0.18em] text-navy/38 transition-colors group-hover:text-navy/70 group-focus:text-navy/70">
+                <div className="grid gap-5 pr-14 lg:grid-cols-[0.06fr_0.28fr_0.33fr_0.24fr_0.09fr] lg:items-center lg:pr-0">
+                  <p className="font-mono text-xs font-black tracking-[0.14em] text-navy/35 lg:pt-2 lg:self-start">
                     {String(index + 1).padStart(2, "0")}.
                   </p>
 
                   <div className="flex items-center gap-4">
-                    <div className="relative size-16 overflow-hidden rounded-full border border-navy/10 bg-navy transition-transform duration-500 group-hover:scale-110 group-focus:scale-110 sm:size-20">
+                    <div className="relative size-16 overflow-hidden rounded-full border border-navy/10 bg-navy shadow-sm sm:size-20">
                       <Image
                         src={member.image}
                         alt={member.name}
@@ -134,43 +131,21 @@ export function TeamCredits() {
                           {member.name}
                         </h3>
                       )}
-                      <p className="mt-2 text-sm font-black uppercase tracking-[0.16em] text-navy/45 transition-colors group-hover:text-navy/70 group-focus:text-navy/70">
+                      <p className="mt-2 text-xs font-black uppercase tracking-[0.14em] text-navy/45 sm:text-sm">
                         {member.role}
                       </p>
                     </div>
                   </div>
 
-                  <div aria-hidden="true" />
-
-                  <div className="flex justify-start lg:justify-end">
-                    {"profileUrl" in member ? (
-                      <a
-                        href={member.profileUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label={`Open ${member.name} LinkedIn profile`}
-                        className="inline-flex size-11 items-center justify-center rounded-full bg-navy text-off-white transition-colors hover:bg-purple"
-                      >
-                        <ArrowUpRight aria-hidden="true" className="size-4" />
-                      </a>
-                    ) : (
-                      <span className="inline-flex size-11 items-center justify-center rounded-full bg-navy text-off-white">
-                        <ArrowUpRight aria-hidden="true" className="size-4" />
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                <div className="grid gap-5 pt-6 opacity-100 lg:max-h-0 lg:overflow-hidden lg:pt-0 lg:opacity-0 lg:transition-all lg:duration-500 lg:group-hover:max-h-96 lg:group-hover:pt-6 lg:group-hover:opacity-100 lg:group-focus:max-h-96 lg:group-focus:pt-6 lg:group-focus:opacity-100 lg:grid-cols-[0.5fr_0.28fr_0.22fr]">
                   <div>
-                    <p className="max-w-2xl text-base font-bold leading-7 text-navy/76">
+                    <p className="max-w-xl text-sm font-semibold leading-6 text-navy/68 sm:text-base">
                       {member.summary}
                     </p>
-                    <div className="mt-4 flex flex-wrap gap-2">
+                    <div className="mt-3 flex flex-wrap gap-2">
                       {member.skills.map((skill) => (
                         <span
                           key={skill}
-                          className="rounded-full border border-navy/10 bg-white/60 px-3 py-1 text-xs font-black text-navy/70"
+                          className="rounded-full border border-navy/10 bg-off-white px-3 py-1 text-xs font-black text-navy/62"
                         >
                           {skill}
                         </span>
@@ -179,8 +154,8 @@ export function TeamCredits() {
                   </div>
 
                   <div>
-                    <p className="mb-3 font-mono text-xs font-black uppercase tracking-[0.18em] text-navy/45">
-                      Companies
+                    <p className="mb-3 font-mono text-[0.68rem] font-black uppercase tracking-[0.14em] text-navy/35">
+                      Project work
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {member.projects.map((project) => (
@@ -194,11 +169,22 @@ export function TeamCredits() {
                     </div>
                   </div>
 
-                  <div className="rounded-2xl border border-navy/10 bg-white/45 p-4">
-                    <p className="font-mono text-xs font-black uppercase tracking-[0.18em] text-navy/45">
-                      Role
-                    </p>
-                    <p className="mt-2 text-2xl font-black text-navy">{member.role}</p>
+                  <div className="absolute bottom-20 right-5 flex justify-start sm:right-6 lg:static lg:justify-end">
+                    {"profileUrl" in member ? (
+                      <a
+                        href={member.profileUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`Open ${member.name} LinkedIn profile`}
+                        className="inline-flex size-11 items-center justify-center rounded-full bg-navy text-off-white transition-colors hover:bg-purple"
+                      >
+                        <ArrowUpRight aria-hidden="true" className="size-4" />
+                      </a>
+                    ) : (
+                      <span className="inline-flex size-11 items-center justify-center rounded-full bg-navy/8 text-navy/40">
+                        <ArrowUpRight aria-hidden="true" className="size-4" />
+                      </span>
+                    )}
                   </div>
                 </div>
               </motion.article>
@@ -220,7 +206,7 @@ function ProjectBadge({
   year: string;
 }) {
   return (
-    <p className="inline-flex max-w-full items-center gap-2 rounded-full border border-navy/10 bg-white/70 px-2.5 py-1 text-xs font-black text-navy/70 shadow-sm lg:inline-flex">
+    <p className="inline-flex max-w-full items-center gap-2 rounded-full border border-navy/10 bg-white px-2.5 py-1 text-xs font-black text-navy/70 shadow-sm lg:inline-flex">
       <CompanyLogo company={company} />
       <span>{label}</span>
       <span className="text-navy/32">-</span>

@@ -93,7 +93,7 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-10 border-t border-white/10 pt-6 lg:mt-8">
-          <p className="break-words text-[clamp(3.2rem,18vw,11rem)] font-black uppercase leading-none tracking-normal text-white drop-shadow-[0_14px_28px_rgba(66,34,229,0.35)] sm:whitespace-nowrap sm:text-[clamp(4.5rem,13vw,11rem)] lg:text-[clamp(3.5rem,10vw,11rem)]">
+          <p className="break-words text-[clamp(3.2rem,18vw,11rem)] font-black uppercase leading-none tracking-normal text-white sm:whitespace-nowrap sm:text-[clamp(4.5rem,13vw,11rem)] lg:text-[clamp(3.5rem,10vw,11rem)]">
             Shams-2026
           </p>
         </div>

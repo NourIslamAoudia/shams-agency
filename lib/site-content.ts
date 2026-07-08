@@ -58,35 +58,35 @@ export const servicesPageItems: ServiceItem[] = [
   {
     title: "Web Development",
     description:
-      "We build fast, modern websites for brands that need a sharp digital presence, clear messaging and smooth performance.",
+      "Fast, responsive websites with clear structure, strong visuals and the technical base needed for long-term growth.",
     image: "/images/services/webdev.png",
-    tags: ["Websites", "Performance", "SEO", "Launch"],
+    tags: ["Websites", "Performance", "SEO", "Content"],
   },
   {
     title: "Mobile Development",
     description:
-      "We design and develop useful mobile experiences for customers, teams and clean-energy operations across the Shams ecosystem.",
+      "Mobile interfaces for customers and internal teams, designed around simple journeys and dependable daily use.",
     image: "/images/services/mobildev.png",
-    tags: ["Mobile Apps", "UX/UI", "Dashboards", "Operations"],
+    tags: ["Mobile Apps", "UX/UI", "Product Flow", "Operations"],
   },
   {
     title: "Desktop Systems",
     description:
-      "We create reliable desktop tools and internal systems for workflows that need speed, stability and long-term support.",
+      "Internal desktop tools and business systems for workflows that need stability, speed and practical support.",
     image: "/images/services/discktoop.png",
-    tags: ["Desktop Setup", "Workstations", "IT Support", "Security"],
+    tags: ["Desktop Apps", "Workstations", "IT Support", "Security"],
   },
   {
     title: "Deployment",
     description:
-      "We prepare, publish and connect digital products with clean release flows, secure hosting and production-ready checks.",
+      "Production setup, hosting and release support so your product goes live cleanly and stays easy to maintain.",
     image: "/images/services/deploy.png",
-    tags: ["Hosting", "CI/CD", "Monitoring", "Security"],
+    tags: ["Hosting", "Release", "Monitoring", "Security"],
   },
   {
     title: "Maintenance",
     description:
-      "We keep your platforms healthy after launch with updates, fixes, backups, monitoring and steady product improvements.",
+      "Ongoing updates, fixes and monitoring to keep platforms secure, current and ready for the next improvement.",
     image: "/images/services/mantu.png",
     tags: ["Updates", "Backups", "Support", "Optimization"],
   },
